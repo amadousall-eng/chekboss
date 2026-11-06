@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mon Espace — EduGenius</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Dashboard Extra ── */
+    .dash-layout {
+      max-width: 1280px; margin: 0 auto;
+      padding: calc(var(--nav-h) + 2rem) 2rem 3rem;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+    }
+
+    /* Profile card */
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+    }
+    .avatar {
+      width: 90px; height: 90px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 1rem;
+      box-shadow: 0 8px 30px rgba(108,99,255,0.4);
+    }
+    .profile-name { font-family: var(--font2); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .profile-class { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .profile-level {
+      background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(255,101,132,0.1));
+      border: 1px solid rgba(108,99,255,0.2);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .level-label { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .level-bar-wrap { height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+    .level-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 72%; border-radius: 4px; }
+    .level-xp { font-size: 0.8rem; color: var(--primary); font-weight: 700; margin-top: 0.4rem; }
+    .profile-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.75rem; text-align: center;
+    }
+    .pstat { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.75rem; }
+    .pstat-num { font-family: var(--font2); font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+    .pstat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* Badges */
+    .badges-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .badges-section h3 { font-family: var(--font2); font-weight: 700; margin-bottom: 1rem; }
+    .badges-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .badge-item {
+      text-align: center; padding: 0.75rem 0.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem; color: var(--text-muted);
+    }
+    .badge-item .badge-icon { font-size: 1.8rem; display: block; margin-bottom: 0.3rem; }
+    .badge-item.earned { border-color: rgba(247,151,30,0.3); background: rgba(247,151,30,0.07); color: var(--accent2); }
+
+    /* Main dashboard */
+    .dash-main { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    /* Welcome banner */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-banner::after {
+      content: '🎓';
+      position: absolute;
+      right: 1.5rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 5rem;
+      opacity: 0.2;
+    }
+    .welcome-banner h2 { font-family: var(--font2); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .welcome-banner p { opacity: 0.85; font-size: 0.95rem; }
+
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .scard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .scard-icon { font-size: 2rem; }
+    .scard-num { font-family: var(--font2); font-size: 1.8rem; font-weight: 800; }
+    .scard-label { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* Activity chart */
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .chart-card h3 { font-family: var(--font2); font-weight: 700; margin-bottom: 1.5rem; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 0.5rem; height: 120px; }
+    .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+    .chart-bar {
+      width: 100%; border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+      transition: height 1s ease;
+      min-height: 4px;
+    }
+    .chart-bar.accent { background: linear-gradient(180deg, var(--accent), #2ecc71); }
+    .chart-day { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Recent lessons */
+    .recent-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+    }
+    .recent-card h3 { font-family: var(--font2); font-weight: 700; margin-bottom: 1.25rem; }
+    .recent-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .recent-item:last-child { border-bottom: none; }
+    .recent-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .recent-info { flex: 1; }
+    .recent-info h4 { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.1rem; }
+    .recent-info p { color: var(--text-muted); font-size: 0.8rem; }
+    .recent-score { font-family: var(--font2); font-weight: 800; font-size: 1rem; }
+
+    @media (max-width: 900px) {
+      .dash-layout { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .stats-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">🚀</span>
+      <span class="logo-text">Edu<span class="logo-accent">Genius</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#classes" class="nav-link">Niveaux</a>
+      <a href="index.html#matieres" class="nav-link">Matières</a>
+      <a href="index.html#quiz" class="nav-link">Quiz</a>
+      <a href="index.html#outils" class="nav-link">Outils</a>
+      <a href="dashboard.html" class="nav-btn">Mon Espace ✨</a>
+    </div>
+  </div>
+</nav>
+
+<div class="dash-layout">
+
+  <!-- LEFT: Profile -->
+  <aside>
+    <div class="profile-card">
+      <div class="avatar">😊</div>
+      <div class="profile-name">Aminata S.</div>
+      <div class="profile-class">🎓 Terminale S2 · Lycée Seydina Limamoulaye (Guédiawaye)</div>
+
+      <div class="profile-level">
+        <div class="level-label">Niveau 12 — Major de Promotion 🇸🇳</div>
+        <div class="level-bar-wrap"><div class="level-bar"></div></div>
+        <div class="level-xp">2 450 XP / 3 000 XP</div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="pstat"><div class="pstat-num">47</div><div class="pstat-label">Leçons MEN vues</div></div>
+        <div class="pstat"><div class="pstat-num" id="statCompletedLessons">47</div><div class="pstat-label">Leçons MEN vues</div></div>
+        <div class="pstat"><div class="pstat-num">15</div><div class="pstat-label">Annales BAC faites</div></div>
+        <div class="pstat"><div class="pstat-num">18j</div><div class="pstat-label">Série active 🔥</div></div>
+        <div class="pstat"><div class="pstat-num">98%</div><div class="pstat-label">Moyenne Quiz</div></div>
+      </div>
+    </div>
+
+    <div class="badges-section">
+      <h3>🏅 Badges obtenus</h3>
+      <div class="badges-grid">
+        <div class="badge-item earned"><span class="badge-icon">⭐</span>Major BFEM</div>
+        <div class="badge-item earned"><span class="badge-icon">🔥</span>7j Série</div>
+        <div class="badge-item earned"><span class="badge-icon">🧠</span>Crac en Maths</div>
+        <div class="badge-item earned"><span class="badge-icon">🇸🇳</span>Top Sénégal</div>
+        <div class="badge-item"><span class="badge-icon">💎</span>30j Série</div>
+        <div class="badge-item"><span class="badge-icon">🏆</span>Mention T.B.</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Dashboard -->
+  <main class="dash-main">
+    <div class="welcome-banner">
+      <h2>Dalal ak jàmm, Aminata ! 👋</h2>
+      <p>Tu as révisé 45 min hier. Les épreuves du Baccalauréat sénégalais approchent : continue ainsi pour décrocher la Mention Très Bien ! 🇸🇳💪</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="scard">
+        <div class="scard-icon">⏱️</div>
+        <div><div class="scard-num">3h24</div><div class="scard-label">Temps cette semaine</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon">📋</div>
+        <div><div class="scard-num">8</div><div class="scard-label">Modules MEN validés</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon">🎯</div>
+        <div><div class="scard-num">87%</div><div class="scard-label">Score Annales BAC</div></div>
+      </div>
+      <div class="scard">
+        <div class="scard-icon">📈</div>
+        <div><div class="scard-num">+14%</div><div class="scard-label">Progression ce mois</div></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>📊 Activité cette semaine</h3>
+      <div class="chart-bars" id="chartBars">
+        <!-- generated by JS -->
+      </div>
+    </div>
+
+    <div class="recent-card">
+      <h3>📚 Dernières activités (Programme Sénégal)</h3>
+      <div class="recent-item">
+        <div class="recent-icon" style="background:rgba(108,99,255,0.15)">📐</div>
+        <div class="recent-info"><h4>Nombres Complexes C & Équations (BAC S)</h4><p>Il y a 2 heures · Mathématiques</p></div>
+        <div class="recent-score" style="color:var(--accent)">✅ 100%</div>
+      </div>
+      <div class="recent-item">
+        <div class="recent-icon" style="background:rgba(255,101,132,0.15)">⚛️</div>
+        <div class="recent-info"><h4>Lois de Newton & Balistique (BAC S1/S2)</h4><p>Hier · Physique-Chimie</p></div>
+        <div class="recent-score" style="color:var(--accent2)">🎯 85%</div>
+      </div>
+      <div class="recent-item">
+        <div class="recent-icon" style="background:rgba(67,233,123,0.15)">🧬</div>
+        <div class="recent-info"><h4>Immunologie : Lymphocytes T4 & VIH</h4><p>Il y a 2 jours · SVT Sénégal</p></div>
+        <div class="recent-score" style="color:var(--accent)">✅ 95%</div>
+      </div>
+      <div class="recent-item">
+        <div class="recent-icon" style="background:rgba(247,151,30,0.15)">🧠</div>
+        <div class="recent-info"><h4>Philosophie africaine : Cheikh Anta Diop</h4><p>Il y a 3 jours · Philosophie BAC</p></div>
+        <div class="recent-score" style="color:var(--accent)">✅ 90%</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+
+  // Chart
+  const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+  const data  = [45, 30, 80, 60, 90, 20, 45];
+  const chartContainer = document.getElementById('chartBars');
+  const max = Math.max(...data);
+
+  days.forEach((day, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chart-bar-wrap';
+    const bar = document.createElement('div');
+    bar.className = 'chart-bar' + (i === 4 ? ' accent' : '');
+    bar.style.height = '0px';
+    const label = document.createElement('div');
+    label.className = 'chart-day';
+    label.textContent = day;
+    wrap.appendChild(bar);
+    wrap.appendChild(label);
+    chartContainer.appendChild(wrap);
+
+    setTimeout(() => {
+      bar.style.height = (data[i] / max * 110) + 'px';
+    }, i * 80 + 400);
+  });
+</script>
+</body>
+</html>
+

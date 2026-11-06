@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduGenius — Apprends, Évolue, Réussis 🚀</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Brython : Moteur Python pur exécuté à 100% à l'intérieur du HTML dans le navigateur -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js"></script>
+</head>
+<body onload="brython()">
+
+<!-- ══════════════════ CURSOR GLOW ══════════════════ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ══════════════════ PARTICLES ══════════════════ -->
+<div class="particles" id="particles"></div>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <span class="logo-icon">🚀</span>
+      <span class="logo-text">Edu<span class="logo-accent">Genius</span></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#classes" class="nav-link">Niveaux</a>
+      <a href="#matieres" class="nav-link">Matières</a>
+      <a href="#quiz" class="nav-link">Quiz</a>
+      <a href="#outils" class="nav-link">Outils</a>
+      <a href="dashboard.html" class="nav-btn">Mon Espace ✨</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-bg-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span> 🇸🇳 Programme Officiel du Sénégal · BFEM & BAC · 6ème à la Terminale
+    </div>
+    <h1 class="hero-title">
+      Réussis ton <span class="gradient-text">BFEM</span> & ton <span class="gradient-text-2">BAC</span> 🇸🇳
+    </h1>
+    <p class="hero-desc">
+      La plateforme éducative 100% conforme aux programmes officiels du Ministère de l'Éducation Nationale du Sénégal (MEN) — Du collège au lycée (S1, S2, L).
+    </p>
+    <div class="hero-actions">
+      <a href="#classes" class="btn btn-primary">
+        <span>Choisir ma classe</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#quiz" class="btn btn-ghost">🎮 Quiz BFEM & BAC</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" data-target="15000">0</span><span class="stat-label">Élèves sénégalais</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num" data-target="100">0</span><span class="stat-label">% Conforme MEN</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num" data-target="98">0</span><span class="stat-label">% Taux de réussite</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="floating-card card-1">📐 Thalès & Pythagore</div>
+    <div class="floating-card card-2">🧬 Immunologie & Génétique</div>
+    <div class="floating-card card-3">⚗️ Acido-Basique & RLC</div>
+    <div class="floating-card card-4">🇸🇳 Histoire du Sénégal</div>
+    <div class="floating-card card-5">∫ Intégrales & Nombres C</div>
+    <div class="hero-planet">
+      <div class="planet-ring"></div>
+      <div class="planet-core">🎓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CLASSES SECTION ══════════════════ -->
+<section class="section" id="classes">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">🇸🇳 Programme Officiel Sénégal</span>
+      <h2 class="section-title">Choisis <span class="gradient-text">ta classe</span></h2>
+      <p class="section-desc">Programme conforme au Ministère de l'Éducation Nationale (MEN) du Sénégal : du Collège d'Enseignement Moyen (CEM) aux Lycées d'Excellence.</p>
+    </div>
+
+    <div class="school-tabs">
+      <button class="school-tab active" data-school="college">🏫 Collège (CEM)</button>
+      <button class="school-tab" data-school="lycee">🎓 Lycée (S1, S2, L)</button>
+    </div>
+
+    <div class="classes-grid" id="classesGrid">
+      <!-- Collège -->
+      <div class="class-card college" data-school="college" onclick="goToClass('6eme')">
+        <div class="class-badge">6ème CEM</div>
+        <div class="class-emoji">🌱</div>
+        <h3>Sixième (6e)</h3>
+        <p>Adaptation au collège selon le MEN : arithmétique, milieux du Sénégal (Niayes, mangrove), préhistoire africaine.</p>
+        <div class="class-subjects">
+          <span>📐 Maths</span><span>📝 Français</span><span>🧬 SVT</span><span>🏺 Histoire-Géo</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <div class="class-card college" data-school="college" onclick="goToClass('5eme')">
+        <div class="class-badge">5ème CEM</div>
+        <div class="class-emoji">🌿</div>
+        <h3>Cinquième (5e)</h3>
+        <p>Fractions, grands empires ouest-africains (Ghana, Mali, Songhaï), électricité et géologie sahélienne.</p>
+        <div class="class-subjects">
+          <span>📐 Décimaux & Fractions</span><span>🏺 Empires du Mali & Ghana</span><span>⚗️ Physiques</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <div class="class-card college" data-school="college" onclick="goToClass('4eme')">
+        <div class="class-badge">4ème CEM</div>
+        <div class="class-emoji">🌳</div>
+        <h3>Quatrième (4e)</h3>
+        <p>Royaumes du Sénégal (Djolof, Cayor, Baol), traite transatlantique (Gorée), Pythagore et atomes.</p>
+        <div class="class-subjects">
+          <span>🔢 Nombres rationnels</span><span>🏺 Cayor & Gorée</span><span>⚗️ Atomes & Molécules</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <div class="class-card college" data-school="college" onclick="goToClass('3eme')">
+        <div class="class-badge" style="background:rgba(255,101,132,0.2);color:#ff6584;font-weight:900;">🏆 EXAMEN DU BFEM</div>
+        <div class="class-emoji">⭐</div>
+        <h3>Troisième (3e)</h3>
+        <p>Année du BFEM : Thalès, trigonométrie, chimie acido-basique, résistances coloniales (Lat-Dior, Bamba) et économie du Sénégal.</p>
+        <div class="class-subjects">
+          <span>🎯 Brevet BFEM</span><span>📐 Thalès & Trigonométrie</span><span>🇸🇳 Lat-Dior & Sénégal</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <!-- Lycée -->
+      <div class="class-card lycee hidden" data-school="lycee" onclick="goToClass('2nde')">
+        <div class="class-badge lycee-badge">2nde S & L</div>
+        <div class="class-emoji">🚀</div>
+        <h3>Seconde (2nde)</h3>
+        <p>Tronc commun d'orientation au Sénégal vers S1, S2, L : trinôme du second degré, vecteurs, cinématique et chimie stœchiométrique.</p>
+        <div class="class-subjects">
+          <span>📐 Second degré</span><span>⚛️ Mouvement & Atome</span><span>📝 Littérature africaine</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <div class="class-card lycee hidden" data-school="lycee" onclick="goToClass('1ere')">
+        <div class="class-badge lycee-badge">1ère S1 · S2 · L</div>
+        <div class="class-emoji">🔥</div>
+        <h3>Première (1ère)</h3>
+        <p>Préparation anticipée : Dérivation, limites, énergie cinétique, chimie organique, méiose mendélienne et BAC de Français.</p>
+        <div class="class-subjects">
+          <span>📈 Dérivées & Limites</span><span>🧪 Chimie Organique</span><span>📝 BAC Français</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+
+      <div class="class-card lycee hidden" data-school="lycee" onclick="goToClass('terminale')">
+        <div class="class-badge lycee-badge terminal" style="background:rgba(247,151,30,0.2);color:#f7971e;font-weight:900;">🏆 BACCALAURÉAT SÉNÉGAL</div>
+        <div class="class-emoji">👑</div>
+        <h3>Terminale (Tle S1, S2, L)</h3>
+        <p>L'examen suprême du BAC sénégalais : Nombres complexes, intégrales, mécanique de Newton, circuits RLC, immunologie et Philosophie.</p>
+        <div class="class-subjects">
+          <span>🎯 BAC S1, S2, L</span><span>∫ Intégrales & Complexes</span><span>🧠 Philosophie</span>
+        </div>
+        <div class="class-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MATIERES SECTION ══════════════════ -->
+<section class="section section-dark" id="matieres">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">🎯 Matières</span>
+      <h2 class="section-title">Toutes les <span class="gradient-text">disciplines</span></h2>
+      <p class="section-desc">Des cours clairs, interactifs et engageants pour chaque matière.</p>
+    </div>
+    <div class="matieres-grid">
+
+      <div class="matiere-card" style="--accent:#6c63ff" onclick="goToSubject('maths')">
+        <div class="matiere-icon">📐</div>
+        <h3>Mathématiques</h3>
+        <p>Algèbre · Géométrie · Fonctions · Probabilités</p>
+        <div class="matiere-tag">125 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#ff6584" onclick="goToSubject('physique')">
+        <div class="matiere-icon">⚛️</div>
+        <h3>Physique-Chimie</h3>
+        <p>Mécanique · Optique · Thermodynamique · Chimie</p>
+        <div class="matiere-tag">98 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#43e97b" onclick="goToSubject('svt')">
+        <div class="matiere-icon">🧬</div>
+        <h3>SVT</h3>
+        <p>Biologie · Géologie · Écologie · Génétique</p>
+        <div class="matiere-tag">87 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#f7971e" onclick="goToSubject('francais')">
+        <div class="matiere-icon">📝</div>
+        <h3>Français</h3>
+        <p>Grammaire · Littérature · Expression écrite · Poésie</p>
+        <div class="matiere-tag">110 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#4facfe" onclick="goToSubject('histoire')">
+        <div class="matiere-icon">🏺</div>
+        <h3>Histoire-Géo</h3>
+        <p>Antiquité · Moyen Âge · Monde contemporain · Géopolitique</p>
+        <div class="matiere-tag">92 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#fa709a" onclick="goToSubject('anglais')">
+        <div class="matiere-icon">🇬🇧</div>
+        <h3>Anglais</h3>
+        <p>Vocabulaire · Grammaire · Expression · Civilisation</p>
+        <div class="matiere-tag">78 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#a18cd1" onclick="goToSubject('philo')">
+        <div class="matiere-icon">🧠</div>
+        <h3>Philosophie</h3>
+        <p>Conscience · Liberté · Morale · Grands auteurs</p>
+        <div class="matiere-tag">45 cours</div>
+      </div>
+
+      <div class="matiere-card" style="--accent:#ffecd2" onclick="goToSubject('info')">
+        <div class="matiere-icon">💻</div>
+        <h3>NSI / Informatique</h3>
+        <p>Python · Algorithmique · Réseaux · BDD</p>
+        <div class="matiere-tag">60 cours</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ QUIZ SECTION ══════════════════ -->
+<section class="section" id="quiz">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">🎮 Quiz</span>
+      <h2 class="section-title">Teste tes <span class="gradient-text">connaissances</span></h2>
+      <p class="section-desc">Questions interactives, chrono, classement — apprendre devient un jeu !</p>
+    </div>
+
+    <div class="quiz-wrapper">
+      <div class="quiz-box" id="quizBox">
+        <div class="quiz-header">
+          <div class="quiz-progress-wrap">
+            <div class="quiz-progress-bar" id="quizProgressBar"></div>
+          </div>
+          <span class="quiz-counter" id="quizCounter">Question 1/5</span>
+          <div class="quiz-timer" id="quizTimer">⏱ 30s</div>
+        </div>
+
+        <div class="quiz-score-display" id="quizScoreDisplay">⭐ Score : <span id="scoreVal">0</span></div>
+
+        <div class="quiz-body">
+          <div class="quiz-subject-tag" id="quizSubjectTag">📐 Mathématiques</div>
+          <h3 class="quiz-question" id="quizQuestion">Chargement...</h3>
+          <div class="quiz-options" id="quizOptions"></div>
+        </div>
+
+        <div class="quiz-result hidden" id="quizResult">
+          <div class="result-emoji" id="resultEmoji">🎉</div>
+          <h3 id="resultTitle">Excellent !</h3>
+          <p id="resultDesc">Tu as obtenu <strong id="finalScore">0</strong> / 5 bonnes réponses !</p>
+          <button class="btn btn-primary" onclick="startQuiz()">🔄 Recommencer</button>
+        </div>
+      </div>
+
+      <div class="quiz-leaderboard">
+        <h3>🏆 Classement</h3>
+        <div class="leaderboard-list">
+          <div class="leader-item gold"><span class="leader-rank">🥇</span><span class="leader-name">Aminata S.</span><span class="leader-score">98pts</span></div>
+          <div class="leader-item silver"><span class="leader-rank">🥈</span><span class="leader-name">Moussa D.</span><span class="leader-score">95pts</span></div>
+          <div class="leader-item bronze"><span class="leader-rank">🥉</span><span class="leader-name">Fatou B.</span><span class="leader-score">91pts</span></div>
+          <div class="leader-item"><span class="leader-rank">4️⃣</span><span class="leader-name">Ibrahima K.</span><span class="leader-score">89pts</span></div>
+          <div class="leader-item"><span class="leader-rank">5️⃣</span><span class="leader-name">Mariama C.</span><span class="leader-score">87pts</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ OUTILS SECTION ══════════════════ -->
+<section class="section section-dark" id="outils">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">🛠️ Outils</span>
+      <h2 class="section-title">Vos <span class="gradient-text">super-outils</span></h2>
+      <p class="section-desc">Des calculatrices, convertisseurs et aide-mémoire toujours disponibles.</p>
+    </div>
+
+    <div class="tools-grid">
+
+      <!-- Calculatrice scientifique -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-icon">🧮</span>
+          <h3>Calculatrice Scientifique</h3>
+        </div>
+        <div class="calc-display" id="calcDisplay">0</div>
+        <div class="calc-grid">
+          <button class="calc-btn fn" onclick="calcFn('clearAll')">AC</button>
+          <button class="calc-btn fn" onclick="calcFn('sqrt')">√</button>
+          <button class="calc-btn fn" onclick="calcFn('pow2')">x²</button>
+          <button class="calc-btn op" onclick="calcOp('/')">÷</button>
+          <button class="calc-btn" onclick="calcNum('7')">7</button>
+          <button class="calc-btn" onclick="calcNum('8')">8</button>
+          <button class="calc-btn" onclick="calcNum('9')">9</button>
+          <button class="calc-btn op" onclick="calcOp('*')">×</button>
+          <button class="calc-btn" onclick="calcNum('4')">4</button>
+          <button class="calc-btn" onclick="calcNum('5')">5</button>
+          <button class="calc-btn" onclick="calcNum('6')">6</button>
+          <button class="calc-btn op" onclick="calcOp('-')">−</button>
+          <button class="calc-btn" onclick="calcNum('1')">1</button>
+          <button class="calc-btn" onclick="calcNum('2')">2</button>
+          <button class="calc-btn" onclick="calcNum('3')">3</button>
+          <button class="calc-btn op" onclick="calcOp('+')">+</button>
+          <button class="calc-btn fn" onclick="calcFn('sign')">+/−</button>
+          <button class="calc-btn" onclick="calcNum('0')">0</button>
+          <button class="calc-btn" onclick="calcNum('.')">.</button>
+          <button class="calc-btn eq" onclick="calcEq()">=</button>
+        </div>
+      </div>
+
+      <!-- Convertisseur -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <span class="tool-icon">🔄</span>
+          <h3>Convertisseur Universel</h3>
+        </div>
+        <div class="converter-body">
+          <select class="conv-select" id="convType" onchange="updateConv()">
+            <option value="length">📏 Longueurs</option>
+            <option value="mass">⚖️ Masses</option>
+            <option value="temp">🌡️ Températures</option>
+            <option value="time">⏱️ Temps</option>
+            <option value="speed">💨 Vitesses</option>
+          </select>
+          <div class="conv-row">
+            <input type="number" class="conv-input" id="convFrom" placeholder="Valeur" oninput="convertValue()" />
+            <select class="conv-unit" id="convFromUnit" onchange="convertValue()"></select>
+          </div>
+          <div class="conv-equals">⇅</div>
+          <div class="conv-row">
+            <input type="number" class="conv-input" id="convTo" placeholder="Résultat" readonly />
+            <select class="conv-unit" id="convToUnit" onchange="convertValue()"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formules rapides -->
+      <div class="tool-card formules-card">
+        <div class="tool-header">
+          <span class="tool-icon">📋</span>
+          <h3>Formules Essentielles</h3>
+        </div>
+        <div class="formules-tabs">
+          <button class="form-tab active" onclick="showFormules('maths', this)">Maths</button>
+          <button class="form-tab" onclick="showFormules('physique', this)">Physique</button>
+          <button class="form-tab" onclick="showFormules('chimie', this)">Chimie</button>
+        </div>
+        <div class="formules-list" id="formulesList"></div>
+      </div>
+
+      <!-- 🐍 NOUVEAU : Labo Python Interactif -->
+      <div class="tool-card python-terminal-card" id="python-lab">
+        <div class="python-header">
+          <div class="python-title-wrap">
+            <span class="tool-icon" style="font-size:1.8rem">🐍</span>
+            <div>
+              <h3 style="font-family:var(--font2);font-size:1.2rem;font-weight:800;color:#fff;">Labo Python & Sciences</h3>
+              <p style="font-size:0.8rem;color:var(--text-muted);">Exécute du code Python en direct pour les exercices du Sénégal (NSI, Algèbre, Physique)</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;">
+            <span class="python-tag">● Python 3</span>
+            <div class="python-presets">
+              <button class="preset-btn" onclick="loadPythonPreset('delta')">Équation 2nd Degré</button>
+              <button class="preset-btn" onclick="loadPythonPreset('pythagore')">Théorème Pythagore</button>
+              <button class="preset-btn" onclick="loadPythonPreset('suite')">Suite Arithmétique</button>
+              <button class="preset-btn" onclick="loadPythonPreset('cinetique')">Énergie Cinétique</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="python-grid">
+          <div class="python-editor-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.8rem;color:var(--text-muted);font-weight:bold;">Éditeur de code</span>
+              <button class="btn btn-primary" onclick="runPythonCode()" style="padding:0.4rem 1.2rem;font-size:0.85rem;">
+                ▶ Exécuter le code
+              </button>
+            </div>
+            <textarea class="python-code-editor" id="pythonCodeInput" spellcheck="false"># 🇸🇳 Exemple : Résolution de ax² + bx + c = 0
+import math
+
+a = 1
+b = -5
+c = 6
+
+delta = b**2 - 4*a*c
+print(f"Discriminant Delta = {delta}")
+
+if delta > 0:
+    x1 = (-b - math.sqrt(delta)) / (2*a)
+    x2 = (-b + math.sqrt(delta)) / (2*a)
+    print(f"Deux solutions distinctes : x1 = {x1} et x2 = {x2}")
+elif delta == 0:
+    x0 = -b / (2*a)
+    print(f"Une solution double : x0 = {x0}")
+else:
+    print("Pas de solution dans IR.")</textarea>
+          </div>
+
+          <div class="python-editor-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.8rem;color:var(--text-muted);font-weight:bold;">Console d'Exécution</span>
+              <button class="preset-btn" onclick="clearPythonOutput()" style="padding:0.2rem 0.6rem;font-size:0.75rem;">Effacer</button>
+            </div>
+            <div class="python-terminal-output" id="pythonTerminalOutput">Cliquez sur '▶ Exécuter le code' pour lancer votre programme...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FEATURES ══════════════════ -->
+<section class="section features-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">✨ Pourquoi nous ?</span>
+      <h2 class="section-title">La <span class="gradient-text">différence</span> EduGenius</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🎯</div>
+        <h3>Personnalisé</h3>
+        <p>Contenu adapté à votre niveau, vos lacunes détectées automatiquement.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <h3>Interactif</h3>
+        <p>Exercices gamifiés, quiz chronométrés, vidéos animées.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <h3>Suivi complet</h3>
+        <p>Dashboard de progression, statistiques, badges et récompenses.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🌙</div>
+        <h3>Mode nuit</h3>
+        <p>Interface sombre pour étudier confortablement le soir.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile First</h3>
+        <p>Étudie partout, même sans connexion grâce au mode hors-ligne.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🆓</div>
+        <h3>100% Gratuit</h3>
+        <p>Pas d'abonnement caché. Toutes les leçons, tous les outils, gratis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <span class="logo-icon">🚀</span>
+          <span class="logo-text">Edu<span class="logo-accent">Genius</span></span>
+        </div>
+        <p>La plateforme qui transforme chaque élève en génie.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn">📘</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="#" class="social-btn">🐦</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Niveaux</h4>
+        <a href="#">6ème · 5ème · 4ème · 3ème</a>
+        <a href="#">2nde · 1ère · Terminale</a>
+      </div>
+      <div class="footer-col">
+        <h4>Matières</h4>
+        <a href="#">Mathématiques</a>
+        <a href="#">Physique-Chimie</a>
+        <a href="#">SVT · Français</a>
+        <a href="#">Histoire-Géo · NSI</a>
+      </div>
+      <div class="footer-col">
+        <h4>Liens</h4>
+        <a href="#">À propos</a>
+        <a href="#">Contact</a>
+        <a href="#">Mentions légales</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 EduGenius — Fait avec ❤️ pour les élèves du monde entier.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ MODAL CLASSE ══════════════════ -->
+<div class="modal-overlay" id="classModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('classModal')">✕</button>
+    <div class="modal-icon" id="modalIcon">🌱</div>
+    <h2 id="modalTitle">Sixième</h2>
+    <p id="modalDesc">Découverte du collège.</p>
+    <div class="modal-subjects" id="modalSubjects"></div>
+    <a href="cours.html" class="btn btn-primary" id="modalCoursLink" style="width:100%;justify-content:center;margin-top:1rem">
+      📖 Accéder aux cours du Sénégal
+    </a>
+  </div>
+</div>
+
+<script src="curriculum_senegal.js"></script>
+<script src="app.js"></script>
+
+<!-- 🐍 Code Python exécuté DIRECTEMENT à l'intérieur du HTML (In-Browser Python) -->
+<script type="text/python">
+from browser import document, window
+import sys
+import io
+import math
+
+def executer_code_python(event=None):
+    code = document['pythonCodeInput'].value
+    output_div = document['pythonTerminalOutput']
+    
+    # Redirection de la sortie standard stdout
+    old_stdout = sys.stdout
+    old_stderr = sys.stderr
+    mystdout = io.StringIO()
+    mystderr = io.StringIO()
+    sys.stdout = mystdout
+    sys.stderr = mystderr
+    
+    # Environnement sécurisé avec accès direct aux calculs
+    safe_namespace = {
+        'math': math,
+        'document': document,
+        'window': window
+    }
+    
+    try:
+        exec(code, safe_namespace)
+        sortie = mystdout.getvalue()
+        if not sortie:
+            sortie = "[Programme Python exécuté avec succès dans le HTML sans sortie console]"
+        output_div.className = "python-terminal-output"
+        output_div.text = sortie
+    except Exception as e:
+        erreurs = mystderr.getvalue()
+        output_div.className = "python-terminal-output has-error"
+        output_div.text = f"❌ Erreur d'exécution Python :\n{e}\n{erreurs}"
+    finally:
+        sys.stdout = old_stdout
+        sys.stderr = old_stderr
+
+# Rendre la fonction Python accessible au clic JavaScript / HTML
+window.pythonRunInHtml = executer_code_python
+</script>
+</body>
+</html>
+

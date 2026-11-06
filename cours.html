@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cours & Programmes du Sénégal — EduGenius</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇸🇳</text></svg>" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- MathJax pour rendu des formules mathématiques et physiques du Sénégal -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    /* ── Cours Page Extra Styles ── */
+    .cours-hero {
+      padding: calc(var(--nav-h) + 2.5rem) 2rem 2.5rem;
+      background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(67,233,123,0.06));
+      border-bottom: 1px solid var(--border);
+    }
+    .cours-hero-inner { max-width: 1280px; margin: 0 auto; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--text-muted); font-weight: 700; margin-bottom: 1.2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--primary); }
+    .cours-hero h1 { font-family: var(--font2); font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .cours-hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 800px; }
+
+    /* Class Switcher Pills */
+    .class-switcher {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .class-pill {
+      padding: 0.5rem 1.1rem;
+      border-radius: 2rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .class-pill:hover { border-color: var(--primary); color: #fff; transform: translateY(-2px); }
+    .class-pill.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(108,99,255,0.4);
+    }
+
+    .cours-layout {
+      max-width: 1280px; margin: 0 auto;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .cours-sidebar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: sticky;
+      top: calc(var(--nav-h) + 1rem);
+      max-height: calc(100vh - var(--nav-h) - 2rem);
+      overflow-y: auto;
+    }
+    .sidebar-header {
+      padding: 1.25rem;
+      background: rgba(108,99,255,0.08);
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-header h3 { font-family: var(--font2); font-size: 1rem; font-weight: 800; color: #fff; }
+    .sidebar-header p { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .sidebar-matiere-btn {
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1.25rem;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+    .sidebar-matiere-btn:hover { background: rgba(108,99,255,0.06); color: var(--primary); }
+    .sidebar-matiere-btn.active {
+      background: rgba(108,99,255,0.12);
+      color: var(--primary);
+      border-left: 4px solid var(--primary);
+    }
+
+    /* Content Area */
+    .cours-content { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    /* Examen Banner */
+    .examen-banner {
+      background: linear-gradient(135deg, rgba(247,151,30,0.15), rgba(255,101,132,0.1));
+      border: 1px solid rgba(247,151,30,0.3);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .examen-banner-text h3 { font-family: var(--font2); font-size: 1.1rem; font-weight: 800; color: #ffb703; }
+    .examen-banner-text p { font-size: 0.85rem; color: var(--text-muted); }
+    .examen-badge {
+      background: #f7971e;
+      color: #000;
+      font-weight: 900;
+      font-size: 0.75rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 2rem;
+      white-space: nowrap;
+    }
+
+    /* Chapters & Lessons */
+    .chapter-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .chapter-header {
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .chapter-tag {
+      background: rgba(108,99,255,0.15);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.25rem 0.6rem;
+      border-radius: 1rem;
+    }
+    .chapter-header h2 { font-family: var(--font2); font-size: 1.2rem; font-weight: 800; }
+
+    .lesson-row {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: background 0.2s;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lesson-row:last-child { border-bottom: none; }
+    .lesson-row:hover { background: rgba(108,99,255,0.04); }
+    .lesson-row:hover { background: rgba(108,99,255,0.06); transform: translateX(3px); }
+    .lesson-info { display: flex; align-items: center; gap: 1rem; }
+    .lesson-dot {
+      width: 32px; height: 32px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(108,99,255,0.12);
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font2); font-weight: 800; font-size: 0.85rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(108,99,255,0.25);
+    }
+    .lesson-title { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .lesson-actions { display: flex; gap: 0.5rem; }
+    .btn-action {
+      padding: 0.4rem 0.85rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 1.5rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .btn-action:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-action.study { background: rgba(67,233,123,0.12); border-color: rgba(67,233,123,0.3); color: #43e97b; }
+    .btn-action.study:hover { background: #43e97b; color: #000; }
+    .btn-action.study { background: linear-gradient(135deg, rgba(67,233,123,0.18), rgba(108,99,255,0.15)); border-color: rgba(67,233,123,0.4); color: #43e97b; }
+    .btn-action.study:hover { background: #43e97b; color: #000; box-shadow: 0 4px 14px rgba(67,233,123,0.3); }
+
+    /* Modal for lesson study */
+    /* Grand Lecteur de Cours (Modal Immersif) */
+    .lesson-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      background: rgba(5,7,15,0.85);
+      backdrop-filter: blur(10px);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      padding: 1rem;
+    }
+    .lesson-modal.open { display: flex; }
+    .lesson-modal.open { display: flex; animation: modalFadeIn 0.25s ease; }
+    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+    
+    .lesson-modal-content {
+      background: var(--surface2);
+      border: 1px solid rgba(108,99,255,0.3);
+      background: #0f121d;
+      border: 1px solid rgba(108,99,255,0.35);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 680px;
+      padding: 2.2rem;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    }
+    .lesson-modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .lesson-modal-close:hover { background: rgba(255,80,80,0.25); color: #ff6584; border-color: #ff6584; }
+
+    /* En-tête de la leçon */
+    .lesson-reader-header {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .lesson-meta-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+    .meta-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 1rem;
+    }
+    .meta-senegal { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+    .meta-matiere { background: rgba(108,99,255,0.15); color: var(--primary); border: 1px solid rgba(108,99,255,0.3); }
+    .meta-duree   { background: rgba(247,151,30,0.15); color: #f7971e; border: 1px solid rgba(247,151,30,0.3); }
+
+    /* Corps du cours */
+    .lesson-reader-body {
+      color: #d1d5db;
+      line-height: 1.8;
+      font-size: 1.02rem;
+    }
+    .lesson-section-block {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.4rem 0;
+    }
+    .lesson-section-title {
+      font-family: var(--font2);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(108,99,255,0.2);
+      padding-bottom: 0.4rem;
+    }
+    .math-box {
+      background: rgba(108,99,255,0.08);
+      border: 1px solid rgba(108,99,255,0.25);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      text-align: center;
+      color: #e2e8f0;
+      font-size: 1.05rem;
+      overflow-x: auto;
+    }
+
+    /* Barre d'outils du cours */
+    .lesson-reader-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @media (max-width: 850px) {
+      .cours-layout { grid-template-columns: 1fr; }
+      .cours-sidebar { position: static; max-height: none; }
+      .lesson-row { flex-direction: column; align-items: flex-start; }
+      .lesson-actions { width: 100%; justify-content: flex-end; }
+      .lesson-modal-content { padding: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-icon">🚀</span>
+      <span class="logo-text">Edu<span class="logo-accent">Genius</span> <span style="font-size:0.8rem;background:rgba(67,233,123,0.15);color:#43e97b;padding:0.2rem 0.6rem;border-radius:1rem;margin-left:0.5rem;">🇸🇳 Sénégal</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#classes" class="nav-link">Niveaux</a>
+      <a href="index.html#matieres" class="nav-link">Matières</a>
+      <a href="index.html#quiz" class="nav-link">Quiz BFEM & BAC</a>
+      <a href="index.html#outils" class="nav-link">Outils</a>
+      <a href="dashboard.html" class="nav-btn">Mon Espace ✨</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="cours-hero">
+  <div class="cours-hero-inner">
+    <a href="index.html" class="back-link">← Retour à l'accueil</a>
+    <h1 id="pageTitle">📚 Programme Officiel du Sénégal</h1>
+    <p id="pageDesc">Parcours 100% conforme aux programmes du Ministère de l'Éducation Nationale du Sénégal (MEN) pour réussir le BFEM et le Baccalauréat.</p>
+
+    <!-- Switcher de classe -->
+    <div class="class-switcher" id="classSwitcher">
+      <button class="class-pill" data-cls="6eme" onclick="selectClass('6eme')">🌱 6ème</button>
+      <button class="class-pill" data-cls="5eme" onclick="selectClass('5eme')">🌿 5ème</button>
+      <button class="class-pill" data-cls="4eme" onclick="selectClass('4eme')">🌳 4ème</button>
+      <button class="class-pill active" data-cls="3eme" onclick="selectClass('3eme')">⭐ 3ème (BFEM)</button>
+      <button class="class-pill" data-cls="2nde" onclick="selectClass('2nde')">🚀 Seconde</button>
+      <button class="class-pill" data-cls="1ere" onclick="selectClass('1ere')">🔥 Première</button>
+      <button class="class-pill" data-cls="terminale" onclick="selectClass('terminale')">👑 Terminale (BAC)</button>
+    </div>
+  </div>
+</div>
+
+<!-- Layout -->
+<div class="cours-layout">
+
+  <!-- Sidebar: Matières -->
+  <aside class="cours-sidebar">
+    <div class="sidebar-header">
+      <h3 id="sidebarClassTitle">Troisième (3e)</h3>
+      <p id="sidebarClassDesc">Cycle Moyen · Examen du BFEM</p>
+    </div>
+    <div id="matiereList">
+      <!-- Matières injectées via JS -->
+    </div>
+  </aside>
+
+  <!-- Main Content: Chapitres & Leçons -->
+  <main class="cours-content">
+
+    <!-- Examen banner -->
+    <div class="examen-banner" id="examenBanner">
+      <div class="examen-banner-text">
+        <h3 id="bannerTitle">🏆 Épreuve Officielle : BFEM</h3>
+        <p id="bannerDesc">Ce programme couvre l'intégralité des sujets d'examens nationaux du Sénégal.</p>
+      </div>
+      <span class="examen-badge" id="bannerBadge">100% CONFORME MEN</span>
+    </div>
+
+    <!-- Leçons Container -->
+    <div id="chaptersContainer">
+      <!-- Rempli dynamiquement par JS -->
+    </div>
+
+  </main>
+</div>
+
+<!-- Modal Fiche de Révision -->
+<!-- Grand Lecteur de Leçon / Modal Immersif -->
+<div class="lesson-modal" id="lessonModal">
+  <div class="lesson-modal-content">
+    <button class="lesson-modal-close" onclick="closeLessonModal()">✕</button>
+    <div style="font-size:0.8rem;color:#a78bfa;font-weight:bold;margin-bottom:0.4rem;">🇸🇳 MINISTÈRE DE L'ÉDUCATION NATIONALE · SÉNÉGAL</div>
+    <h2 id="modalLessonTitle" style="font-family:var(--font2);margin-bottom:1rem;">Titre de la leçon</h2>
+    <div id="modalLessonBody" style="line-height:1.7;color:var(--text-muted);font-size:0.95rem;">
+      <!-- Contenu injecté -->
+    <button class="lesson-modal-close" onclick="closeLessonModal()" title="Fermer la leçon">✕</button>
+    
+    <div class="lesson-reader-header">
+      <div class="lesson-meta-badges">
+        <span class="meta-badge meta-senegal">🇸🇳 RÉPUBLIQUE DU SÉNÉGAL · MEN</span>
+        <span class="meta-badge meta-matiere" id="modalBadgeMatiere">Mathématiques</span>
+        <span class="meta-badge meta-duree" id="modalBadgeDuree">⏱️ 40 min</span>
+        <span class="meta-badge" id="modalBadgeExamen" style="background:rgba(255,101,132,0.15);color:#ff6584;border:1px solid rgba(255,101,132,0.3);">🏆 BFEM</span>
+      </div>
+      <h1 id="modalLessonTitle" style="font-family:var(--font2);font-size:1.8rem;font-weight:800;color:#fff;margin:0.5rem 0;">Titre de la leçon</h1>
+      <p id="modalLessonIntro" style="color:var(--text-muted);font-size:0.95rem;line-height:1.6;">Introduction de la leçon...</p>
+    </div>
+    <div style="margin-top:1.5rem;display:flex;gap:0.8rem;">
+      <a href="index.html#quiz" class="btn btn-primary" style="font-size:0.9rem;">🎯 S'entraîner sur ce point</a>
+      <button class="btn btn-ghost" onclick="closeLessonModal()" style="font-size:0.9rem;">Fermer</button>
+
+    <!-- Corps du cours complet -->
+    <div class="lesson-reader-body" id="modalLessonBody">
+      <!-- Injecté dynamiquement depuis lecons_db.js -->
+    </div>
+
+    <!-- Barre d'outils inférieure -->
+    <div class="lesson-reader-toolbar">
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="speakLesson()" id="btnVoiceLesson" style="font-size:0.85rem;padding:0.5rem 1rem;">
+          🔊 Écouter le cours
+        </button>
+        <button class="btn btn-ghost" onclick="window.print()" style="font-size:0.85rem;padding:0.5rem 1rem;">
+          🖨️ Imprimer la fiche
+        </button>
+      </div>
+
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+        <button class="btn btn-ghost" id="btnMarkComplete" onclick="toggleLessonComplete()" style="font-size:0.85rem;padding:0.5rem 1rem;color:#43e97b;border-color:rgba(67,233,123,0.3);">
+          ✅ Marquer comme compris
+        </button>
+        <a href="index.html#quiz" class="btn btn-primary" style="font-size:0.85rem;padding:0.5rem 1.2rem;">
+          🎯 Quiz d'entraînement
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer" style="margin-top:2rem">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 EduGenius Sénégal — Programmes conformes au Ministère de l'Éducation Nationale (MEN). <a href="index.html" style="color:var(--primary)">Accueil</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="curriculum_senegal.js"></script>
+<script src="lecons_db.js"></script>
+<script>
+  let currentClassKey = '3eme';
+  let currentMatiereName = null;
+  let currentActiveLessonTitle = '';
+
+  // Lecture des paramètres URL (ex: cours.html?classe=terminale)
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramClasse = urlParams.get('classe');
+  if (paramClasse && SENEGAL_CURRICULUM[paramClasse]) {
+    currentClassKey = paramClasse;
+  }
+
+  function selectClass(clsKey) {
+    if (!SENEGAL_CURRICULUM[clsKey]) return;
+    currentClassKey = clsKey;
+
+    // Mise à jour visuelle des pilules
+    document.querySelectorAll('.class-pill').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.cls === clsKey);
+    });
+
+    const clsData = SENEGAL_CURRICULUM[clsKey];
+    document.getElementById('pageTitle').textContent = `📚 ${clsData.nom} · Sénégal`;
+    document.getElementById('pageDesc').textContent = clsData.description;
+    document.getElementById('sidebarClassTitle').textContent = clsData.nom;
+    document.getElementById('sidebarClassDesc').textContent = `${clsData.cycle} · ${clsData.examen}`;
+
+    document.getElementById('bannerTitle').textContent = `🎯 Objectif : ${clsData.examen}`;
+    document.getElementById('bannerDesc').textContent = `Programme officiel du Sénégal préparant aux évaluations et examens nationaux.`;
+
+    // Matières disponibles
+    const matieresKeys = Object.keys(clsData.matieres);
+    currentMatiereName = matieresKeys[0]; // sélectionne la première matière par défaut
+    renderMatieresSidebar(matieresKeys);
+    renderChapters();
+  }
+
+  function renderMatieresSidebar(matieresKeys) {
+    const list = document.getElementById('matiereList');
+    list.innerHTML = '';
+    matieresKeys.forEach(matName => {
+      const btn = document.createElement('button');
+      btn.className = `sidebar-matiere-btn ${matName === currentMatiereName ? 'active' : ''}`;
+      btn.innerHTML = `<span>${matName}</span> <span>→</span>`;
+      btn.onclick = () => {
+        currentMatiereName = matName;
+        document.querySelectorAll('.sidebar-matiere-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderChapters();
+      };
+      list.appendChild(btn);
+    });
+  }
+
+  function renderChapters() {
+    const container = document.getElementById('chaptersContainer');
+    container.innerHTML = '';
+
+    const clsData = SENEGAL_CURRICULUM[currentClassKey];
+    if (!clsData || !clsData.matieres[currentMatiereName]) return;
+
+    const chapitres = clsData.matieres[currentMatiereName];
+
+    // Vérifier les leçons terminées en mémoire
+    const completedList = JSON.parse(localStorage.getItem('edugenius_completed_lessons') || '[]');
+
+    chapitres.forEach((chap, cIdx) => {
+      const block = document.createElement('div');
+      block.className = 'chapter-block';
+
+      const header = document.createElement('div');
+      header.className = 'chapter-header';
+      header.innerHTML = `
+        <span class="chapter-tag">Module ${cIdx + 1}</span>
+        <h2>${chap.chapitre}</h2>
+      `;
+      block.appendChild(header);
+
+      chap.lecons.forEach((lecon, lIdx) => {
+        const isDone = completedList.includes(lecon);
+        const row = document.createElement('div');
+        row.className = 'lesson-row';
+        row.onclick = () => openLessonStudy(currentClassKey, currentMatiereName, chap.chapitre, lecon);
+
+        row.innerHTML = `
+          <div class="lesson-info">
+            <div class="lesson-dot">${(lIdx + 1) < 10 ? '0' + (lIdx + 1) : (lIdx + 1)}</div>
+            <div class="lesson-title">${lecon}</div>
+            <div class="lesson-dot" style="${isDone ? 'background:rgba(67,233,123,0.2);color:#43e97b;border-color:#43e97b;' : ''}">
+              ${isDone ? '✓' : ((lIdx + 1) < 10 ? '0' + (lIdx + 1) : (lIdx + 1))}
+            </div>
+            <div>
+              <div class="lesson-title">${lecon}</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem;">
+                ${isDone ? '<span style="color:#43e97b;font-weight:bold;">● Leçon comprise</span>' : '● Cliquez pour ouvrir le cours complet'}
+              </div>
+            </div>
+          </div>
+          <div class="lesson-actions">
+            <button class="btn-action study" onclick="openLessonStudy('${currentClassKey}', '${escapeHtml(currentMatiereName)}', '${escapeHtml(chap.chapitre)}', '${escapeHtml(lecon)}')">📖 Fiche Résumé</button>
+            <button class="btn-action" onclick="window.location.href='index.html#quiz'">🎯 Quiz</button>
+          <div class="lesson-actions" onclick="event.stopPropagation();">
+            <button class="btn-action study" onclick="openLessonStudy('${currentClassKey}', '${escapeHtml(currentMatiereName)}', '${escapeHtml(chap.chapitre)}', '${escapeHtml(lecon)}')">
+              📖 Cours Complet
+            </button>
+            <button class="btn-action" onclick="window.location.href='index.html#quiz'">
+              🎯 Quiz
+            </button>
+          </div>
+        `;
+        block.appendChild(row);
+      });
+
+      container.appendChild(block);
+    });
+  }
+
+  function escapeHtml(text) {
+    return text.replace(/'/g, "\\'");
+  }
+
+  function openLessonStudy(clsKey, matiere, chapitre, lecon) {
+    currentActiveLessonTitle = lecon;
+
+    // Récupérer le contenu depuis la base enrichie ou le générateur
+    let fiche = (typeof LECONS_DB !== 'undefined' && LECONS_DB[lecon]) 
+                ? LECONS_DB[lecon] 
+                : genererFicheCoursOfficielle(clsKey, matiere, chapitre, lecon);
+
+    document.getElementById('modalLessonTitle').textContent = lecon;
+    const clsNom = SENEGAL_CURRICULUM[clsKey].nom;
+    document.getElementById('modalLessonBody').innerHTML = `
+      <div style="background:rgba(108,99,255,0.08);padding:1rem;border-radius:8px;margin-bottom:1rem;border-left:3px solid var(--primary);">
+        <strong>Niveau :</strong> ${clsNom} · <strong>Discipline :</strong> ${matiere}<br/>
+        <strong>Module :</strong> ${chapitre}
+    document.getElementById('modalBadgeMatiere').textContent = matiere;
+    document.getElementById('modalBadgeDuree').textContent = `⏱️ ${fiche.duree || '35 min'}`;
+    document.getElementById('modalBadgeExamen').textContent = `🏆 ${fiche.examen || 'Examen National'}`;
+    document.getElementById('modalLessonIntro').textContent = fiche.introduction || '';
+
+    // Construction du corps du cours
+    let bodyHtml = `
+      <div style="background:rgba(108,99,255,0.08);padding:1rem 1.2rem;border-radius:10px;margin-bottom:1.5rem;border-left:4px solid var(--primary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+        <div>
+          <strong>Niveau :</strong> ${fiche.niveau} &nbsp;·&nbsp; <strong>Discipline :</strong> ${matiere}<br/>
+          <strong>Module :</strong> ${chapitre}
+        </div>
+        <div style="font-size:0.85rem;color:#f7971e;font-weight:bold;">
+          Difficulté : ${fiche.difficulte || '★★★☆☆'}
+        </div>
+      </div>
+      <h4 style="color:#fff;margin-bottom:0.5rem;">📌 Objectifs d'apprentissage (Curriculum Sénégal) :</h4>
+      <p>Cette leçon fait partie du programme national officiel déterminé par le Ministère de l'Éducation Nationale. Elle aborde les concepts fondamentaux, les compétences exigibles pour l'évaluation continue et la réussite aux examens nationaux (BFEM / BAC).</p>
+      <h4 style="color:#fff;margin:1rem 0 0.5rem;">🔑 Points clés à retenir :</h4>
+      <ul style="padding-left:1.2rem;margin-bottom:1rem;">
+        <li>Maîtrise des définitions et notions de base du cours.</li>
+        <li>Application méthodique dans la résolution des exercices types et annales du Sénégal.</li>
+        <li>Rigueur de rédaction scientifique ou argumentation littéraire selon la matière.</li>
+      </ul>
+      <p style="color:#43e97b;font-weight:bold;">💡 Astuce examen : Consultez régulièrement les épreuves et corrections des sessions précédentes pour maximiser vos notes !</p>
+    `;
+
+    // Sections du cours
+    fiche.sections.forEach((sec, idx) => {
+      bodyHtml += `
+        <div class="lesson-section-block">
+          <div class="lesson-section-title">${sec.titre}</div>
+          <div style="font-size:0.98rem;line-height:1.7;">${sec.contenu}</div>
+        </div>
+      `;
+    });
+
+    document.getElementById('modalLessonBody').innerHTML = bodyHtml;
+
+    // Mise à jour de l'état "Compris"
+    updateCompleteButtonState();
+
+    // Affichage du modal
+    document.getElementById('lessonModal').classList.add('open');
+
+    // Rendu des formules mathématiques par MathJax
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise([document.getElementById('modalLessonBody')]);
+    }
+  }
+
+  function closeLessonModal() {
+    document.getElementById('lessonModal').classList.remove('open');
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const btn = document.getElementById('btnVoiceLesson');
+      if (btn) btn.textContent = "🔊 Écouter le cours";
+    }
+  }
+
+  // Marquer comme compris / sauvegarder progression
+  function toggleLessonComplete() {
+    let completedList = JSON.parse(localStorage.getItem('edugenius_completed_lessons') || '[]');
+    const idx = completedList.indexOf(currentActiveLessonTitle);
+    if (idx === -1) {
+      completedList.push(currentActiveLessonTitle);
+    } else {
+      completedList.splice(idx, 1);
+    }
+    localStorage.setItem('edugenius_completed_lessons', JSON.stringify(completedList));
+    updateCompleteButtonState();
+    renderChapters();
+  }
+
+  function updateCompleteButtonState() {
+    const completedList = JSON.parse(localStorage.getItem('edugenius_completed_lessons') || '[]');
+    const isDone = completedList.includes(currentActiveLessonTitle);
+    const btn = document.getElementById('btnMarkComplete');
+    if (btn) {
+      if (isDone) {
+        btn.textContent = "✓ Leçon comprise (cliquer pour annuler)";
+        btn.style.background = "rgba(67,233,123,0.2)";
+        btn.style.borderColor = "#43e97b";
+      } else {
+        btn.textContent = "✅ Marquer comme compris";
+        btn.style.background = "transparent";
+        btn.style.borderColor = "rgba(67,233,123,0.3)";
+      }
+    }
+  }
+
+  // Synthèse vocale pour écouter la leçon
+  let isSpeaking = false;
+  function speakLesson() {
+    if (!window.speechSynthesis) {
+      alert("La synthèse vocale n'est pas supportée par votre navigateur.");
+      return;
+    }
+    const btn = document.getElementById('btnVoiceLesson');
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      btn.textContent = "🔊 Écouter le cours";
+    } else {
+      const textToRead = `${document.getElementById('modalLessonTitle').textContent}. ${document.getElementById('modalLessonIntro').textContent}. ${document.getElementById('modalLessonBody').innerText}`;
+      const utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 1500)); // extrait principal
+      utterance.lang = 'fr-FR';
+      utterance.rate = 1.0;
+      utterance.onend = () => {
+        isSpeaking = false;
+        btn.textContent = "🔊 Écouter le cours";
+      };
+      window.speechSynthesis.speak(utterance);
+      isSpeaking = true;
+      btn.textContent = "⏹️ Arrêter la lecture";
+    }
+  }
+
+  // Fermeture par clic en dehors
+  document.getElementById('lessonModal').addEventListener('click', function(e) {
+    if (e.target === this) closeLessonModal();
+  });
+
+  // Initialisation
+  selectClass(currentClassKey);
+</script>
+</body>
+</html>
